@@ -2,288 +2,606 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <title>馬德里四天三夜行程互動式地圖版</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>馬德里四天三夜行程規劃</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --morandi-bg: #f8f5ef;
+            --morandi-card: #f6f2eb;
+            --morandi-title: #50485a;
+            --morandi-red: #b97c7c;
+            --morandi-orange: #e3ae76;
+            --morandi-gray: #6c5a5a;
+            --morandi-btnbg: #ead8c1;
+            --morandi-btnactive: #b97c7c;
+            --morandi-link: #b97c7c;
+            --morandi-shadow: rgba(185, 124, 124, 0.16);
+            --morandi-shadow-card: 0 8px 40px 10px rgba(180, 160, 140, 0.13), 0 1.5px 8px rgba(185,124,124,0.11);
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #e0f2f1; /* 清新淺綠色 */
-            color: #212121;
+            font-family: 'Inter', 'Noto Sans TC', '微軟正黑體', sans-serif;
+            background: var(--morandi-bg);
+            color: var(--morandi-title);
+            background-image:
+                url('https://www.transparenttextures.com/patterns/cubes.png'),
+                linear-gradient(120deg, #f8f5ef 0%, #f6f2eb 100%);
+            background-repeat: repeat, no-repeat;
+            background-size: auto, cover;
         }
-        .nav-item.active {
-            @apply border-b-2 border-teal-600 text-teal-600;
-        }
-        .map-container {
-            position: relative;
+        .spain-flag {
             width: 100%;
-            height: 400px;
+            max-width: 900px;
+            margin: 1.2em auto 1.1em auto;
+            height: 44px;
+            border-radius: 28px;
             overflow: hidden;
-            border-radius: 0.5rem;
+            box-shadow: 0 2px 16px var(--morandi-shadow);
+            display: flex;
+            align-items: stretch;
         }
-        .map-frame {
-            border: 0;
+        .spain-flag-red {
+            flex: 3;
+            background: var(--morandi-red);
+        }
+        .spain-flag-orange {
+            flex: 4;
+            background: var(--morandi-orange);
+        }
+        .spain-flag-red.right {
+            flex: 3;
+            background: var(--morandi-red);
+        }
+        /* 主標題背景區塊 */
+        .main-title-bg {
+            max-width: 1100px;
+            margin: 0 auto;
+            margin-bottom: 0.7em;
+            position: relative;
+            padding: 0;
+        }
+        .main-title-bgimg {
             width: 100%;
-            height: 100%;
+            border-radius: 2.5rem;
+            box-shadow: 0 8px 40px 10px rgba(180, 160, 140, 0.13), 0 1.5px 8px rgba(185,124,124,0.11);
+            object-fit: cover;
+            height: 215px;
+            display: block;
         }
-        .card {
-            background-color: #ffffff;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+        .main-title-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 215px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            background: rgba(248,245,239,0.70);
+            border-radius: 2.5rem;
         }
-        .card:hover {
-            transform: translateY(-5px);
+        .main-title {
+            font-size: 2.38rem;
+            font-weight: bold;
+            color: var(--morandi-title);
+            text-align: center;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.45em;
+            line-height: 1.2;
+        }
+        @media (max-width: 1100px) {
+            .main-title-bg { max-width: 97vw; }
+        }
+        @media (max-width: 800px) {
+            .main-title-bgimg, .main-title-area { height: 110px; border-radius: 1rem;}
+            .main-title { font-size: 1.37rem;}
+        }
+        .morandi-sub {
+            background: linear-gradient(90deg, var(--morandi-orange) 0%, var(--morandi-card) 100%);
+            padding: 0.7em 1.2em;
+            border-radius: 1em;
+            color: var(--morandi-red);
+            font-size: 1.07em;
+            margin-bottom: 2em;
+            text-align: center;
+            box-shadow: 0 1px 4px var(--morandi-shadow);
+            letter-spacing: 0.02em;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .nav-controls {
+            max-width: 900px;
+            margin: 0 auto 2.2em auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .navbar-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar-link {
+            font-size: 1.08rem;
+            color: var(--morandi-title);
+            font-weight: 500;
+            background: var(--morandi-btnbg);
+            border-radius: 0.4em;
+            padding: 0.6em 1.4em;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 1px 2px var(--morandi-shadow);
+            transition: background 0.15s, color 0.15s;
+            letter-spacing: 0.02em;
+        }
+        .navbar-link.active,
+        .navbar-link:hover {
+            background: var(--morandi-btnactive);
+            color: #fff;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .tab-btn {
+            background: var(--morandi-btnbg);
+            color: var(--morandi-title);
+            border-radius: 0.5rem;
+            padding: 0.7em 2em;
+            font-weight: 600;
+            font-size: 1.07rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 2px var(--morandi-shadow);
+            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.02em;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--morandi-btnactive);
+            color: #fff;
+        }
+        .itinerary-card {
+            background: var(--morandi-card);
+            border-radius: 2.2rem;
+            box-shadow: var(--morandi-shadow-card);
+            padding: 2.2rem 2rem 2rem 2rem;
+            margin: 0 auto 2rem auto;
+            max-width: 900px;
+            position: relative;
+        }
+        .itinerary-title {
+            font-size: 1.55rem;
+            font-weight: bold;
+            color: var(--morandi-title);
+            margin-bottom: 1.7rem;
+            text-align: left;
+            letter-spacing: 0.04em;
+        }
+        .item-title {
+            font-size: 1.17rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--morandi-red);
+        }
+        .item-text {
+            font-size: 1.04rem;
+            color: var(--morandi-gray);
+            margin-bottom: 0.5rem;
+        }
+        .step-title {
+            font-weight: bold;
+            color: var(--morandi-orange);
+            font-size: 1.08rem;
+            margin-bottom: 0.4em;
+            letter-spacing: 0.02em;
+        }
+        .step-card {
+            background: #fff;
+            border-radius: 1.1rem;
+            box-shadow: 0 2px 14px 0 rgba(185,124,124,0.16), 0 1px 4px rgba(180,160,140,0.13);
+            margin-bottom: 1.1em;
+            padding: 1em 1.2em;
+            font-size: 1.04rem;
+            color: var(--morandi-title);
+        }
+        a {
+            color: var(--morandi-red);
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        a:hover {
+            color: #a65a5a;
+        }
+        .map-embed {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 6px 24px var(--morandi-shadow);
+            margin: 1em 0 0.2em 0;
+            width: 100%;
+            height: 320px;
+            display: none;
+        }
+        .map-embed.active { display: block; }
+        .map-tabs-btns {
+            margin-bottom: 2em;
+        }
+        .map-tabs-btn {
+            background: var(--morandi-btnbg);
+            color: var(--morandi-title);
+            border-radius: 0.5rem;
+            padding: 0.6em 1.6em;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-right: 1em;
+            margin-bottom: 0.7em;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 2px var(--morandi-shadow);
+            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.02em;
+        }
+        .map-tabs-btn.active, .map-tabs-btn:hover {
+            background: var(--morandi-btnactive);
+            color: #fff;
+        }
+        ul.list-disc li { margin-bottom: 0.4em;}
+        @media (max-width: 1200px) {
+            .main-title-bg { max-width: 100vw;}
+        }
+        @media (max-width: 900px) {
+            .main-title-bg { max-width: 97vw; }
+            .main-title-bgimg, .main-title-area { height: 110px; border-radius: 1rem;}
+            .main-title { font-size: 1.37rem;}
+            .itinerary-card { padding: 1.2rem 0.7rem; }
+            .itinerary-title { font-size: 1.05rem; }
+            .navbar-link { font-size: 0.97rem; padding: 0.5em 0.9em; }
+            .tab-btn, .map-tabs-btn { font-size: 0.95rem; padding: 0.5em 1em; }
+            .map-embed { height: 180px; }
+            .spain-flag { height: 26px; }
+            .nav-controls { flex-direction: column; align-items: flex-end; gap: 0.8em; }
         }
     </style>
 </head>
-<body class="bg-gray-100">
-
-<div id="app" class="min-h-screen">
-    <!-- 導覽列 (Navigation) -->
-    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-teal-700">馬德里之旅</h1>
-            <div class="flex space-x-6">
-                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day1')">第一天</a>
-                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day2')">第二天</a>
-                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day3')">第三天</a>
-                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day4')">第四天</a>
-                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('food')">美食推薦</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-4 pt-24">
-        <!-- 飯店資訊 -->
-        <div id="hotel-info" class="card p-6 mb-8 bg-teal-50">
-            <h2 class="text-xl font-bold text-teal-700 mb-2">住宿：Hotel Catalonia Atocha</h2>
-            <p class="text-gray-700">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙</p>
-            <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank" class="text-teal-500 hover:underline">查看飯店官網</a>
-        </div>
-        
-        <!-- 第一天行程 -->
-        <div id="day1" class="itinerary-page">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">第一天 (8/27)：從巴塞隆納啟程，探索市中心廣場</h2>
-            <div class="space-y-8">
-                <!-- 行程卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：抵達馬德里，入住飯店</h3>
-                    <p class="text-gray-700">從巴塞隆納搭乘交通工具抵達馬德里，入住 **Hotel Catalonia Atocha**。</p>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：馬約爾廣場 (Plaza Mayor) 與 太陽門廣場 (Puerta del Sol)</h3>
-                    <p class="text-gray-700">從飯店步行至廣場，感受熱鬧氛圍。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">步行</span></p>
-                        <p class="text-gray-700">距離與時間：從飯店步行至馬約爾廣場約 **900 公尺**，需時約 **12 分鐘**。</p>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：聖米格爾市場 (Mercado de San Miguel)</h3>
-                    <p class="text-gray-700">在市場中享用晚餐，體驗當地的美食氛圍。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">步行</span></p>
-                        <p class="text-gray-700">距離與時間：從太陽門廣場步行至市場約 **550 公尺**，需時約 **7 分鐘**。</p>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!4m5!1s0xd42287c805eb393%3A0xf6f695a0e0e0e64b!2zU2FuIE1pZ3VlbCBNYXJrZXQsIE1lcmNhZG8gZGUgU2FuIE1pZ3VlbCwgUGxhemEgZGUgU2FuIE1pZ3VlbCwgc3RpbGwgd2hpbGUgc3RhbmRpbmcsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jO-8jA!3m2!1d40.4153794!2d-3.7089697!5e0!3m2!1szh-TW!2sjp!4v1722514115160!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 第二天行程 -->
-        <div id="day2" class="itinerary-page hidden">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">第二天 (8/28)：探索古蹟與皇宮</h2>
-            <div class="space-y-8">
-                <!-- 行程卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：神殿博物館 (Templo de Debod)</h3>
-                    <p class="text-gray-700">欣賞這座來自古埃及的歷史建築。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">捷運或步行</span></p>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li>**步行：** 從飯店步行至神殿博物館約需 **21 分鐘**。</li>
-                            <li>**捷運：** 從飯店步行至 **Atocha 地鐵站**，搭乘地鐵至 **Plaza de España 站**，再步行前往。總車程約 **30-37 分鐘**。</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：馬德里王宮 (Palacio Real de Madrid)</h3>
-                    <p class="text-gray-700">參觀壯麗的歐洲王宮。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">捷運或步行</span></p>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li>**步行：** 從飯店步行至王宮約 **1.6 公里**，需時約 **21 分鐘**。</li>
-                            <li>**捷運：** 從飯店步行至 **Atocha 地鐵站**，搭乘地鐵至 **Opera 站**，預估車程約 **21 分鐘**。</li>
-                        </ul>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42287e0766d3a5%3A0x8e833486c4784a95!2zUm95YWwgUGFsYWNlIG9mIE1hZHJpZCwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.417955!2d-3.714312!5e0!3m2!1szh-TW!2sjp!4v1722514261778!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：東方廣場 (Plaza de Oriente)</h3>
-                    <p class="text-gray-700">在王宮前的廣場欣賞日落美景。</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 第三天行程 -->
-        <div id="day3" class="itinerary-page hidden">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">第三天 (8/29)：古城托雷多一日遊</h2>
-            <div class="space-y-8">
-                <!-- 行程卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：前往托雷多 (Toledo)</h3>
-                    <p class="text-gray-700">探索被列為世界遺產的千年古城。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車或火車</span></p>
-                        <ul class="list-disc list-inside text-gray-700">
-                            <li>**開車 (自駕)：** 從飯店駕車前往，總距離約 **71.4 公里**，預估車程約 **49 分鐘**。</li>
-                            <li>**火車 (大眾運輸)：** 從飯店步行至 **Atocha 火車站**，搭乘火車前往，車程約 **34 分鐘**。</li>
-                        </ul>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42287c805eb393%3A0xf6f695a0e0e0e64b!2z576O5LqT6I-T55uN5b6x5aSn6Kq_!3m2!1d39.8628316!2d-4.0273231!5e0!3m2!1szh-TW!2sjp!4v1722514330919!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：托雷多市區觀光</h3>
-                    <p class="text-gray-700">參觀 **托雷多主教座堂 (Catedral de Toledo)** 與 **托雷多城堡 (Alcázar de Toledo)**。</p>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：返回馬德里</h3>
-                    <p class="text-gray-700">駕車或搭火車返回馬德里，在飯店附近享用晚餐。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 第四天行程 -->
-        <div id="day4" class="itinerary-page hidden">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">第四天 (8/30)：古城塞哥維亞一日遊，並前往機場飯店</h2>
-            <div class="space-y-8">
-                <!-- 行程卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：前往塞哥維亞 (Segovia)</h3>
-                    <p class="text-gray-700">欣賞著名的 **羅馬水道橋 (Acueducto de Segovia)** 和 **塞哥維亞城堡 (Alcázar de Segovia)**。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車 (自駕)</span></p>
-                        <p class="text-gray-700">距離與時間：從飯店駕車前往，總距離約 **95.8 公里**，預估車程約 **1 小時 4 分鐘**。</p>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd422201997b6935%3A0xb366b53298a03c2!2z5aSJ6Ieq5b6x5b275LqnLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.9429032!2d-4.1088069!5e0!3m2!1szh-TW!2sjp!4v1722514396347!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：塞哥維亞市區觀光</h3>
-                    <p class="text-gray-700">在塞哥維亞參觀各個景點。</p>
-                </div>
-
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：前往機場飯店</h3>
-                    <p class="text-gray-700">駕車前往 **Adolfo Suárez Madrid-Barajas Airport** 附近的機場飯店辦理入住。</p>
-                    <div class="mt-4">
-                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車 (自駕)</span></p>
-                        <p class="text-gray-700">距離與時間：總距離約 **102 公里**，預估車程約 **1 小時 6 分鐘**。</p>
-                    </div>
-                    <div class="map-container mt-4">
-                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd422201997b6935%3A0xb366b53298a03c2!2z5aSJ6Ieq5b6x5b275LqnLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.9429032!2d-4.1088069!4m5!1s0xd42286b24d73289%3A0x66f600455c1f0b09!2zQWRvbGZvIFN1w6FrezggTWFkcmlk4oCTQmFyYWphcyBBaXJwb3J0LCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.4895147!2d-3.5642764!5e0!3m2!1szh-TW!2sjp!4v1722514467069!5m2!1szh-TW!2sjp"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 美食推薦 -->
-        <div id="food" class="itinerary-page hidden">
-            <h2 class="text-3xl font-bold text-teal-800 mb-6">馬德里美食、購物與伴手禮推薦</h2>
-            <div class="space-y-8">
-                <!-- 美食卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">必吃美食</h3>
-                    <ul class="list-disc list-inside text-gray-700 space-y-4">
-                        <li>
-                            <span class="font-semibold">炸魷魚三明治 (Bocadillo de Calamares)：</span>
-                            <p>在馬約爾廣場附近的 **La Campana** 或 **Casa Rua** 可以品嚐到。</p>
-                            <div class="map-container mt-2">
-                                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="font-semibold">西班牙海鮮飯 (Paella)：</span>
-                            <p>推薦餐廳：**La Barraca** (使用高品質米) 或 **Taberna El Sur** (適合一人獨享)。</p>
-                            <div class="map-container mt-2">
-                                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="font-semibold">西班牙小吃 (Tapas)：</span>
-                            <p>可以在 **聖米格爾市場 (Mercado de San Miguel)** 體驗各種小點心。</p>
-                        </li>
-                        <li>
-                            <span class="font-semibold">吉拿棒佐巧克力 (Churros con Chocolate)：</span>
-                            <p>推薦老店：**Chocolateria San Gines**，位於馬約爾廣場附近。</p>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- 伴手禮卡片 -->
-                <div class="card p-6">
-                    <h3 class="text-2xl font-bold text-teal-700 mb-2">必買清單與伴手禮</h3>
-                    <p class="text-gray-700 mb-4">您可以到超市或百貨公司，如英國宮百貨 (El Corte Inglés) 購買。</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-4">
-                        <li>
-                            <span class="font-semibold">食品類：</span>
-                            <p>伊比利火腿、橄欖油、杏仁糖 (Turrón)、紫羅蘭花糖 (La Violeta)、Marcilla 咖啡。</p>
-                        </li>
-                        <li>
-                            <span class="font-semibold">藥妝保養品：</span>
-                            <p>Xhekpon 膠原蛋白頸紋霜、MartiDerm 安瓶精華。</p>
-                        </li>
-                        <li>
-                            <span class="font-semibold">紀念品與精品：</span>
-                            <p>西甲球隊紀念品 (如皇馬)、當地皮件品牌、磁鐵等。</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </main>
+<body>
+<div class="spain-flag">
+    <div class="spain-flag-red"></div>
+    <div class="spain-flag-orange"></div>
+    <div class="spain-flag-red right"></div>
 </div>
-
+<!-- 主標題背景區塊（插入圖片） -->
+<div class="main-title-bg">
+    <!-- 圖片請替換 src，推薦寬高比 5:1~6:1，建議 1100x215px  -->
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1100&q=80" alt="馬德里旅遊主題圖" class="main-title-bgimg">
+    <div class="main-title-area">
+        <div class="main-title">馬德里四天三夜行程規劃</div>
+    </div>
+</div>
+<div class="morandi-sub">西班牙莫蘭迪色主題・自然旅行風格・互動行程地圖</div>
+<div class="nav-controls">
+    <div class="navbar-links">
+        <button class="navbar-link active" onclick="showDay(0);showTab(getCurrentTab());">8/27</button>
+        <button class="navbar-link" onclick="showDay(1);showTab(getCurrentTab());">8/28</button>
+        <button class="navbar-link" onclick="showDay(2);showTab(getCurrentTab());">8/29</button>
+        <button class="navbar-link" onclick="showDay(3);showTab(getCurrentTab());">8/30</button>
+        <button class="navbar-link" onclick="showDay(4);showTab(getCurrentTab());">美食伴手禮</button>
+    </div>
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('text')">行程文字</button>
+        <button class="tab-btn" onclick="showTab('map')">地圖模式</button>
+    </div>
+</div>
+<div id="itinerary-cards">
+    <!-- 第一天 -->
+    <div class="itinerary-card" id="day0">
+        <div class="itinerary-title">第一天 (8/27)：從巴塞隆納啟程，探索市中心廣場</div>
+        <div id="day0-text">
+            <div class="item-title">住宿：Hotel Catalonia Atocha</div>
+            <div class="item-text">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙 <br>
+                <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank">查看飯店官網</a>
+            </div>
+            <div class="step-title">上午：抵達馬德里，入住飯店</div>
+            <div class="step-card">
+                從巴塞隆納搭乘交通工具抵達馬德里，入住 <b>Hotel Catalonia Atocha</b>。
+            </div>
+            <div class="step-title">下午：馬約爾廣場 (Plaza Mayor)</div>
+            <div class="step-card">
+                步行約 900 公尺，需時約 12 分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Plaza+Mayor,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+            <div class="step-title">太陽門廣場 (Puerta del Sol)</div>
+            <div class="step-card">
+                步行約 350 公尺，需時約 5 分鐘。
+                <a href="https://www.google.com/maps/dir/Plaza+Mayor,+Madrid,+Spain/Puerta+del+Sol,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+            <div class="step-title">聖米格爾市場 (Mercado de San Miguel)</div>
+            <div class="step-card">
+                步行約 550 公尺，需時約 7 分鐘。
+                <a href="https://www.google.com/maps/dir/Puerta+del+Sol,+Madrid,+Spain/Mercado+de+San+Miguel,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+        </div>
+        <div id="day0-map" style="display:none;">
+            <div class="map-tabs-btns">
+                <button class="map-tabs-btn active" onclick="showMap(0, 'hotel')">住宿</button>
+                <button class="map-tabs-btn" onclick="showMap(0, 'mayor')">馬約爾廣場</button>
+                <button class="map-tabs-btn" onclick="showMap(0, 'sol')">太陽門廣場</button>
+                <button class="map-tabs-btn" onclick="showMap(0, 'market')">聖米格爾市場</button>
+            </div>
+            <div id="map0-hotel" class="map-embed active">
+                <iframe src="https://www.google.com/maps?q=Hotel+Catalonia+Atocha,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map0-mayor" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Plaza+Mayor,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map0-sol" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Puerta+del+Sol,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map0-market" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Mercado+de+San+Miguel,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 第二天 -->
+    <div class="itinerary-card" id="day1" style="display:none;">
+        <div class="itinerary-title">第二天 (8/28)：探索馬德里古蹟與皇宮</div>
+        <div id="day1-text">
+            <div class="item-title">住宿：Hotel Catalonia Atocha</div>
+            <div class="item-text">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙 <br>
+                <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank">查看飯店官網</a>
+            </div>
+            <div class="step-title">上午：神殿博物館 (Templo de Debod)</div>
+            <div class="step-card">
+                步行約 1.7 公里，約需 21 分鐘。<br>
+                捷運：Atocha地鐵站出發，車程約 30-37 分鐘。<br>
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Templo+de+Debod,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+            <div class="step-title">午後：馬德里王宮 (Palacio Real de Madrid)</div>
+            <div class="step-card">
+                步行約 1.6 公里，約需 21 分鐘。<br>
+                捷運：Atocha至Opera站，約 21 分鐘。<br>
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Palacio+Real+de+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+            <div class="step-title">傍晚：東方廣場 (Plaza de Oriente)</div>
+            <div class="step-card">
+                王宮前方欣賞日落美景。
+                <a href="https://www.google.com/maps/dir/Palacio+Real+de+Madrid,+Spain/Plaza+de+Oriente,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+        </div>
+        <div id="day1-map" style="display:none;">
+            <div class="map-tabs-btns">
+                <button class="map-tabs-btn active" onclick="showMap(1, 'debod')">神殿博物館</button>
+                <button class="map-tabs-btn" onclick="showMap(1, 'palace')">馬德里王宮</button>
+                <button class="map-tabs-btn" onclick="showMap(1, 'oriente')">東方廣場</button>
+            </div>
+            <div id="map1-debod" class="map-embed active">
+                <iframe src="https://www.google.com/maps?q=Templo+de+Debod,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map1-palace" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Palacio+Real+de+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map1-oriente" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Plaza+de+Oriente,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 第三天 -->
+    <div class="itinerary-card" id="day2" style="display:none;">
+        <div class="itinerary-title">第三天 (8/29)：托雷多古城一日遊</div>
+        <div id="day2-text">
+            <div class="item-title">住宿：Hotel Catalonia Atocha</div>
+            <div class="item-text">
+                地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙 <br>
+                <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank">查看飯店官網</a>
+            </div>
+            <div class="step-title">上午：前往托雷多 (Toledo)</div>
+            <div class="step-card">
+                <b>方式一：火車（推薦）</b><br>
+                從馬德里Atocha火車站搭乘Renfe AVE/ALVIA高速火車，直達托雷多火車站，車程約34分鐘。<br>
+                建議提前在<a href="https://www.renfe.com/es/en" target="_blank">Renfe官網</a>或App購買車票。<br>
+                <b>搭乘方式：</b>飯店步行約9分鐘至Atocha火車站，出發搭乘火車。<br>
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Estación+de+Madrid+Atocha,+Madrid,+Spain/" target="_blank">飯店至Atocha火車站步行路線</a>
+                <br><br>
+                <b>方式二：自駕</b><br>
+                從飯店出發，自駕約71.4公里，約49分鐘可達托雷多市中心。<br>
+                托雷多古城建議停車於火車站或城外停車場，步行進入老城區。<br>
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Toledo,+Spain/" target="_blank">自駕路線規劃</a>
+            </div>
+            <div class="step-title">中午：托雷多主教座堂 (Catedral de Toledo)</div>
+            <div class="step-card">
+                <b>火車：</b>托雷多火車站出站後，可搭乘公車或計程車至主教座堂（約2.2公里，公車約10分鐘，步行約28分鐘）。<br>
+                <b>自駕：</b>可將車停於火車站或城外停車場，步行或搭乘公車至主教座堂。<br>
+                <a href="https://www.google.com/maps/dir/Toledo+Train+Station,+Spain/Catedral+de+Toledo,+Spain/" target="_blank">步行/公車路線</a>
+            </div>
+            <div class="step-title">下午：托雷多古城巡禮</div>
+            <div class="step-card">
+                推薦散步猶太區、阿爾卡薩城堡、托雷多老城巷弄等景點。<br>
+                可購買<a href="https://www.toledomonumental.com/en/" target="_blank">Toledo Monumental通票</a>，一次參觀多個景點。
+            </div>
+            <div class="step-title">傍晚：返回馬德里</div>
+            <div class="step-card">
+                <b>火車：</b>搭乘同樣的火車由Toledo返回馬德里Atocha站。<br>
+                <b>自駕：</b>自駕約71.4公里，約49分鐘返回飯店。<br>
+                <a href="https://www.google.com/maps/dir/Toledo,+Spain/Hotel+Catalonia+Atocha,+Madrid,+Spain/" target="_blank">托雷多至飯店路線</a>
+            </div>
+        </div>
+        <div id="day2-map" style="display:none;">
+            <div class="map-tabs-btns">
+                <button class="map-tabs-btn active" onclick="showMap(2, 'atocha')">Atocha火車站</button>
+                <button class="map-tabs-btn" onclick="showMap(2, 'toledo')">托雷多</button>
+                <button class="map-tabs-btn" onclick="showMap(2, 'cathedral')">主教座堂</button>
+                <button class="map-tabs-btn" onclick="showMap(2, 'hotel')">飯店</button>
+            </div>
+            <div id="map2-atocha" class="map-embed active">
+                <iframe src="https://www.google.com/maps?q=Estación+de+Madrid+Atocha,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map2-toledo" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Toledo,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map2-cathedral" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Catedral+de+Toledo,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map2-hotel" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Hotel+Catalonia+Atocha,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 第四天 -->
+    <div class="itinerary-card" id="day3" style="display:none;">
+        <div class="itinerary-title">第四天 (8/30)：塞哥維亞一日遊＋機場飯店</div>
+        <div id="day3-text">
+            <div class="item-title">住宿：Hotel Catalonia Atocha</div>
+            <div class="item-text">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙 <br>
+                <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank">查看飯店官網</a>
+            </div>
+            <div class="step-title">上午：塞哥維亞 (Segovia)</div>
+            <div class="step-card">
+                自駕 95.8公里1小時4分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Segovia,+Spain/" target="_blank">自駕路線</a>
+            </div>
+            <div class="step-title">中午：塞哥維亞水道橋/城堡</div>
+            <div class="step-card">
+                水道橋至城堡約1.4公里，步行17分鐘。
+                <a href="https://www.google.com/maps/dir/Acueducto+de+Segovia,+Spain/Alc%C3%A1zar+de+Segovia,+Spain/" target="_blank">步行路線</a>
+            </div>
+            <div class="step-title">下午：前往機場飯店</div>
+            <div class="step-card">
+                自駕102公里1小時6分鐘。
+                <a href="https://www.google.com/maps/dir/Segovia,+Spain/Adolfo+Su%C3%A1rez+Madrid-Barajas+Airport,+Spain/" target="_blank">自駕路線</a>
+            </div>
+        </div>
+        <div id="day3-map" style="display:none;">
+            <div class="map-tabs-btns">
+                <button class="map-tabs-btn active" onclick="showMap(3, 'segovia')">塞哥維亞</button>
+                <button class="map-tabs-btn" onclick="showMap(3, 'aqueduct')">水道橋</button>
+                <button class="map-tabs-btn" onclick="showMap(3, 'castle')">城堡</button>
+                <button class="map-tabs-btn" onclick="showMap(3, 'airport')">機場</button>
+            </div>
+            <div id="map3-segovia" class="map-embed active">
+                <iframe src="https://www.google.com/maps?q=Segovia,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map3-aqueduct" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Acueducto+de+Segovia,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map3-castle" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Alcázar+de+Segovia,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map3-airport" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Adolfo+Suárez+Madrid-Barajas+Airport,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 美食伴手禮 -->
+    <div class="itinerary-card" id="day4" style="display:none;">
+        <div class="itinerary-title">美食伴手禮推薦</div>
+        <div id="day4-text">
+            <div class="item-title">住宿：Hotel Catalonia Atocha</div>
+            <div class="item-text">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙 <br>
+                <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank">查看飯店官網</a>
+            </div>
+            <div class="step-title">美食推薦</div>
+            <div class="step-card">
+                <b>炸魷魚三明治：</b>馬約爾廣場附近的 La Campana 或 Casa Rua。步行約900公尺12分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Plaza+Mayor,+Madrid,+Spain/" target="_blank">路線規劃</a><br>
+                <b>西班牙海鮮飯：</b>La Barraca 或 Taberna El Sur。步行約1.1公里15分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Mercado+de+San+Miguel,+Madrid,+Spain/" target="_blank">路線規劃</a><br>
+                <b>西班牙小吃 (Tapas)：</b>聖米格爾市場，各式傳統小點。步行約1.1公里14分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Mercado+de+San+Miguel,+Madrid,+Spain/" target="_blank">路線規劃</a><br>
+                <b>吉拿棒佐巧克力：</b>Chocolateria San Gines，馬約爾廣場附近。步行約950公尺12分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/Chocolateria+San+Gines,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+            <div class="step-title">必買伴手禮</div>
+            <div class="step-card">
+                <ul class="list-disc list-inside text-[1.04em] leading-relaxed">
+                    <li>
+                        <strong>食品類：</strong> 伊比利火腿（Jamón Ibérico）、橄欖油、杏仁糖、紫羅蘭花糖、Marcilla 咖啡、西班牙紅酒
+                    </li>
+                    <li>
+                        <strong>藥妝保養品：</strong> Xhekpon膠原蛋白霜、MartiDerm精華、ISDIN防曬、Sesderma精華
+                    </li>
+                    <li>
+                        <strong>精品/品牌：</strong> LOEWE皮件、Camper鞋履、Desigual服飾、El Corte Inglés百貨、Bimba y Lola包包、Massimo Dutti服飾
+                    </li>
+                    <li>
+                        <strong>紀念品：</strong> 西甲球隊紀念品、磁鐵、明信片、陶瓷飾品、扇子、鑰匙圈
+                    </li>
+                </ul>
+                <br>
+                可至超市或百貨公司(如英國宮)採購。步行約1.3公里17分鐘。
+                <a href="https://www.google.com/maps/dir/Hotel+Catalonia+Atocha,+Madrid,+Spain/El+Corte+Ingl%C3%A9s,+Madrid,+Spain/" target="_blank">路線規劃</a>
+            </div>
+        </div>
+        <div id="day4-map" style="display:none;">
+            <div class="map-tabs-btns">
+                <button class="map-tabs-btn active" onclick="showMap(4, 'mayor')">馬約爾廣場</button>
+                <button class="map-tabs-btn" onclick="showMap(4, 'market')">聖米格爾市場</button>
+                <button class="map-tabs-btn" onclick="showMap(4, 'churros')">吉拿棒店</button>
+                <button class="map-tabs-btn" onclick="showMap(4, 'elcorte')">百貨公司</button>
+            </div>
+            <div id="map4-mayor" class="map-embed active">
+                <iframe src="https://www.google.com/maps?q=Plaza+Mayor,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map4-market" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Mercado+de+San+Miguel,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map4-churros" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=Chocolateria+San+Gines,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+            <div id="map4-elcorte" class="map-embed">
+                <iframe src="https://www.google.com/maps?q=El+Corte+Inglés,+Madrid,+Spain&output=embed" style="border:0;width:100%;height:100%;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    // 啟用導覽列
-    const navItems = document.querySelectorAll('.nav-item');
-    const pages = document.querySelectorAll('.itinerary-page');
-
-    function showPage(pageId) {
-        pages.forEach(page => page.classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
-        
-        navItems.forEach(item => item.classList.remove('active'));
-        document.querySelector(`[onclick="showPage('${pageId}')"]`).classList.add('active');
-        
-        window.scrollTo(0, 0);
+    function showDay(dayIdx) {
+        for (let i = 0; i < 5; i++) {
+            document.getElementById('day'+i).style.display = (i === dayIdx) ? '' : 'none';
+        }
+        document.querySelectorAll('.navbar-link').forEach((btn, idx) => {
+            btn.classList.toggle('active', idx === dayIdx);
+        });
+        let tab = getCurrentTab();
+        showTab(tab, dayIdx);
     }
-    
-    // 預設顯示第一天行程
-    document.addEventListener('DOMContentLoaded', () => {
-        showPage('day1');
-    });
+    function showTab(tab, forceDay) {
+        let dayIdx = typeof forceDay === 'number' ? forceDay : getCurrentDay();
+        let textDiv = document.getElementById('day'+dayIdx+'-text');
+        let mapDiv = document.getElementById('day'+dayIdx+'-map');
+        if(tab==='text'){
+            textDiv.style.display = '';
+            mapDiv.style.display = 'none';
+        }else{
+            textDiv.style.display = 'none';
+            mapDiv.style.display = '';
+        }
+        document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+            btn.classList.toggle('active', (tab==='text' && idx===0) || (tab==='map' && idx===1));
+        });
+    }
+    function getCurrentDay(){
+        return Array.from(document.querySelectorAll('.navbar-link')).findIndex(btn=>btn.classList.contains('active'));
+    }
+    function getCurrentTab(){
+        return document.querySelector('.tab-btn.active').getAttribute('onclick').includes('text') ? 'text' : 'map';
+    }
+    function showMap(dayIdx, which) {
+        let mapIds = Array.from(document.querySelectorAll('#day'+dayIdx+'-map .map-embed')).map(div=>div.id.replace('map'+dayIdx+'-',''));
+        mapIds.forEach(id=>{
+            document.getElementById('map'+dayIdx+'-'+id).classList.toggle('active', id===which);
+        });
+        document.querySelectorAll('#day'+dayIdx+'-map .map-tabs-btn').forEach(btn=>{
+            btn.classList.toggle('active', btn.onclick && btn.onclick.toString().includes("'" + which + "'"));
+        });
+    }
+    showDay(0);
+    showTab('text');
+    showMap(0, 'hotel');
+    showMap(1, 'debod');
+    showMap(2, 'atocha');
+    showMap(3, 'segovia');
+    showMap(4, 'mayor');
 </script>
-
 </body>
 </html>
