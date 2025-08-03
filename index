@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>馬德里四天三夜行程規劃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f2f1; /* 清新淺綠色 */
+            color: #212121;
+        }
+        .nav-item.active {
+            @apply border-b-2 border-teal-600 text-teal-600;
+        }
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        .map-frame {
+            border: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<div id="app" class="min-h-screen">
+    <!-- 導覽列 (Navigation) -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-teal-700">馬德里之旅</h1>
+            <div class="flex space-x-6">
+                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day1')">第一天</a>
+                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day2')">第二天</a>
+                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day3')">第三天</a>
+                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('day4')">第四天</a>
+                <a href="#" class="nav-item text-gray-600 hover:text-teal-600 transition-colors duration-300 px-2 py-1" onclick="showPage('food')">美食推薦</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 pt-24">
+        <!-- 飯店資訊 -->
+        <div id="hotel-info" class="card p-6 mb-8 bg-teal-50">
+            <h2 class="text-xl font-bold text-teal-700 mb-2">住宿：Hotel Catalonia Atocha</h2>
+            <p class="text-gray-700">地址：C. de Atocha, 81, Centro, 28012 Madrid, 西班牙</p>
+            <a href="https://www.cataloniahotels.com/es/hotel/catalonia-atocha?mb=1" target="_blank" class="text-teal-500 hover:underline">查看飯店官網</a>
+        </div>
+        
+        <!-- 第一天行程 -->
+        <div id="day1" class="itinerary-page">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">第一天 (8/27)：從巴塞隆納啟程，探索市中心廣場</h2>
+            <div class="space-y-8">
+                <!-- 行程卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：抵達馬德里，入住飯店</h3>
+                    <p class="text-gray-700">從巴塞隆納搭乘交通工具抵達馬德里，入住 **Hotel Catalonia Atocha**。</p>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：馬約爾廣場 (Plaza Mayor) 與 太陽門廣場 (Puerta del Sol)</h3>
+                    <p class="text-gray-700">從飯店步行至廣場，感受熱鬧氛圍。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">步行</span></p>
+                        <p class="text-gray-700">距離與時間：從飯店步行至馬約爾廣場約 **900 公尺**，需時約 **12 分鐘**。</p>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：聖米格爾市場 (Mercado de San Miguel)</h3>
+                    <p class="text-gray-700">在市場中享用晚餐，體驗當地的美食氛圍。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">步行</span></p>
+                        <p class="text-gray-700">距離與時間：從太陽門廣場步行至市場約 **550 公尺**，需時約 **7 分鐘**。</p>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!4m5!1s0xd42287c805eb393%3A0xf6f695a0e0e0e64b!2zU2FuIE1pZ3VlbCBNYXJrZXQsIE1lcmNhZG8gZGUgU2FuIE1pZ3VlbCwgUGxhemEgZGUgU2FuIE1pZ3VlbCwgc3RpbGwgd2hpbGUgc3RhbmRpbmcsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jO-8jA!3m2!1d40.4153794!2d-3.7089697!5e0!3m2!1szh-TW!2sjp!4v1722514115160!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二天行程 -->
+        <div id="day2" class="itinerary-page hidden">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">第二天 (8/28)：探索古蹟與皇宮</h2>
+            <div class="space-y-8">
+                <!-- 行程卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：神殿博物館 (Templo de Debod)</h3>
+                    <p class="text-gray-700">欣賞這座來自古埃及的歷史建築。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">捷運或步行</span></p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li>**步行：** 從飯店步行至神殿博物館約需 **21 分鐘**。</li>
+                            <li>**捷運：** 從飯店步行至 **Atocha 地鐵站**，搭乘地鐵至 **Plaza de España 站**，再步行前往。總車程約 **30-37 分鐘**。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：馬德里王宮 (Palacio Real de Madrid)</h3>
+                    <p class="text-gray-700">參觀壯麗的歐洲王宮。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">捷運或步行</span></p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li>**步行：** 從飯店步行至王宮約 **1.6 公里**，需時約 **21 分鐘**。</li>
+                            <li>**捷運：** 從飯店步行至 **Atocha 地鐵站**，搭乘地鐵至 **Opera 站**，預估車程約 **21 分鐘**。</li>
+                        </ul>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42287e0766d3a5%3A0x8e833486c4784a95!2zUm95YWwgUGFsYWNlIG9mIE1hZHJpZCwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.417955!2d-3.714312!5e0!3m2!1szh-TW!2sjp!4v1722514261778!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：東方廣場 (Plaza de Oriente)</h3>
+                    <p class="text-gray-700">在王宮前的廣場欣賞日落美景。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 第三天行程 -->
+        <div id="day3" class="itinerary-page hidden">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">第三天 (8/29)：古城托雷多一日遊</h2>
+            <div class="space-y-8">
+                <!-- 行程卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：前往托雷多 (Toledo)</h3>
+                    <p class="text-gray-700">探索被列為世界遺產的千年古城。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車或火車</span></p>
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li>**開車 (自駕)：** 從飯店駕車前往，總距離約 **71.4 公里**，預估車程約 **49 分鐘**。</li>
+                            <li>**火車 (大眾運輸)：** 從飯店步行至 **Atocha 火車站**，搭乘火車前往，車程約 **34 分鐘**。</li>
+                        </ul>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42287c805eb393%3A0xf6f695a0e0e0e64b!2z576O5LqT6I-T55uN5b6x5aSn6Kq_!3m2!1d39.8628316!2d-4.0273231!5e0!3m2!1szh-TW!2sjp!4v1722514330919!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：托雷多市區觀光</h3>
+                    <p class="text-gray-700">參觀 **托雷多主教座堂 (Catedral de Toledo)** 與 **托雷多城堡 (Alcázar de Toledo)**。</p>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：返回馬德里</h3>
+                    <p class="text-gray-700">駕車或搭火車返回馬德里，在飯店附近享用晚餐。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第四天行程 -->
+        <div id="day4" class="itinerary-page hidden">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">第四天 (8/30)：古城塞哥維亞一日遊，並前往機場飯店</h2>
+            <div class="space-y-8">
+                <!-- 行程卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">上午：前往塞哥維亞 (Segovia)</h3>
+                    <p class="text-gray-700">欣賞著名的 **羅馬水道橋 (Acueducto de Segovia)** 和 **塞哥維亞城堡 (Alcázar de Segovia)**。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車 (自駕)</span></p>
+                        <p class="text-gray-700">距離與時間：從飯店駕車前往，總距離約 **95.8 公里**，預估車程約 **1 小時 4 分鐘**。</p>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd422201997b6935%3A0xb366b53298a03c2!2z5aSJ6Ieq5b6x5b275LqnLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.9429032!2d-4.1088069!5e0!3m2!1szh-TW!2sjp!4v1722514396347!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">下午：塞哥維亞市區觀光</h3>
+                    <p class="text-gray-700">在塞哥維亞參觀各個景點。</p>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">傍晚：前往機場飯店</h3>
+                    <p class="text-gray-700">駕車前往 **Adolfo Suárez Madrid-Barajas Airport** 附近的機場飯店辦理入住。</p>
+                    <div class="mt-4">
+                        <p class="font-semibold">交通方式：<span class="text-teal-600">開車 (自駕)</span></p>
+                        <p class="text-gray-700">距離與時間：總距離約 **102 公里**，預估車程約 **1 小時 6 分鐘**。</p>
+                    </div>
+                    <div class="map-container mt-4">
+                        <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd422201997b6935%3A0xb366b53298a03c2!2z5aSJ6Ieq5b6x5b275LqnLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.9429032!2d-4.1088069!4m5!1s0xd42286b24d73289%3A0x66f600455c1f0b09!2zQWRvbGZvIFN1w6FrezggTWFkcmlk4oCTQmFyYWphcyBBaXJwb3J0LCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.4895147!2d-3.5642764!5e0!3m2!1szh-TW!2sjp!4v1722514467069!5m2!1szh-TW!2sjp"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美食推薦 -->
+        <div id="food" class="itinerary-page hidden">
+            <h2 class="text-3xl font-bold text-teal-800 mb-6">馬德里美食、購物與伴手禮推薦</h2>
+            <div class="space-y-8">
+                <!-- 美食卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">必吃美食</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-4">
+                        <li>
+                            <span class="font-semibold">炸魷魚三明治 (Bocadillo de Calamares)：</span>
+                            <p>在馬約爾廣場附近的 **La Campana** 或 **Casa Rua** 可以品嚐到。</p>
+                            <div class="map-container mt-2">
+                                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="font-semibold">西班牙海鮮飯 (Paella)：</span>
+                            <p>推薦餐廳：**La Barraca** (使用高品質米) 或 **Taberna El Sur** (適合一人獨享)。</p>
+                            <div class="map-container mt-2">
+                                <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d1519.2319200388916!2d-3.707831032333791!3d40.4159516625807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0xd42289f6445f1b1%3A0x6b301c238b975d4a!2zSG90ZWwgQ2F0YWxvbmlhIEF0b2NoYSwgQy4gZGUgQXRvY2hhLCA4MSwgQ2VudHJvLCAyODAxMiBNYWRyaWQsIOCPveWMl-WAmeW-i-S4reaKue-8jO-8jO-8jO-8jA!3m2!1d40.4118358!2d-3.697807!4m5!1s0xd42288019e07577%3A0xf63989a319f36f6d!2zTWF5b3IgU3F1YXJlLCBQbGF6YSBNYXlvciwgTWFkcmlkLCDigJ3jgJPjgL_jgJXjgJvjgIXjgKHjgJbjgI_jgJzjgK7jgJPjgJvjgII!3m2!1d40.415511!2d-3.7074009!5e0!3m2!1szh-TW!2sjp!4v1722513904677!5m2!1szh-TW!2sjp"></iframe>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="font-semibold">西班牙小吃 (Tapas)：</span>
+                            <p>可以在 **聖米格爾市場 (Mercado de San Miguel)** 體驗各種小點心。</p>
+                        </li>
+                        <li>
+                            <span class="font-semibold">吉拿棒佐巧克力 (Churros con Chocolate)：</span>
+                            <p>推薦老店：**Chocolateria San Gines**，位於馬約爾廣場附近。</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 伴手禮卡片 -->
+                <div class="card p-6">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-2">必買清單與伴手禮</h3>
+                    <p class="text-gray-700 mb-4">您可以到超市或百貨公司，如英國宮百貨 (El Corte Inglés) 購買。</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-4">
+                        <li>
+                            <span class="font-semibold">食品類：</span>
+                            <p>伊比利火腿、橄欖油、杏仁糖 (Turrón)、紫羅蘭花糖 (La Violeta)、Marcilla 咖啡。</p>
+                        </li>
+                        <li>
+                            <span class="font-semibold">藥妝保養品：</span>
+                            <p>Xhekpon 膠原蛋白頸紋霜、MartiDerm 安瓶精華。</p>
+                        </li>
+                        <li>
+                            <span class="font-semibold">紀念品與精品：</span>
+                            <p>西甲球隊紀念品 (如皇馬)、當地皮件品牌、磁鐵等。</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // 啟用導覽列
+    const navItems = document.querySelectorAll('.nav-item');
+    const pages = document.querySelectorAll('.itinerary-page');
+
+    function showPage(pageId) {
+        pages.forEach(page => page.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+        
+        navItems.forEach(item => item.classList.remove('active'));
+        document.querySelector(`[onclick="showPage('${pageId}')"]`).classList.add('active');
+        
+        window.scrollTo(0, 0);
+    }
+    
+    // 預設顯示第一天行程
+    document.addEventListener('DOMContentLoaded', () => {
+        showPage('day1');
+    });
+</script>
+
+</body>
+</html>
