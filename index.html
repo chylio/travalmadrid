@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>馬德里四天三夜行程互動式地圖版</title>
+    <title>馬德里不思議</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -28,6 +28,35 @@
                 linear-gradient(120deg, #f8f5ef 0%, #f6f2eb 100%);
             background-repeat: repeat, no-repeat;
             background-size: auto, cover;
+        }
+        /* AMEE 標籤自訂樣式 */
+        .amee-tag {
+            position: absolute;
+            top: 0.8em;
+            right: 2.1em;
+            z-index: 10;
+            background: #065377;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.01rem;
+            padding: 0.48em 1.4em;
+            border-radius: 1.5em 1.5em 0.8em 0.8em;
+            box-shadow: 0 2px 10px rgba(6,83,119,0.11);
+            text-decoration: none;
+            transition: background 0.18s;
+            letter-spacing: 0.04em;
+        }
+        .amee-tag:hover {
+            background: #036183;
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .amee-tag {
+                top: 0.5em;
+                right: 0.9em;
+                font-size: 0.93rem;
+                padding: 0.35em 0.9em;
+            }
         }
         .spain-flag {
             width: 100%;
@@ -273,6 +302,8 @@
 </div>
 <!-- 主標題背景區塊（插入圖片） -->
 <div class="main-title-bg">
+    <!-- AMEE 標籤連結 -->
+    <a class="amee-tag" href="https://chylio.github.io/meeting-description/" target="_blank">AMEE</a>
     <!-- 圖片請替換 src，推薦寬高比 5:1~6:1，建議 1100x215px  -->
     <img src="madrid.png" alt="馬德里旅遊主題圖" class="main-title-bgimg">
     <div class="main-title-area">
