@@ -274,12 +274,12 @@
 <!-- 主標題背景區塊（插入圖片） -->
 <div class="main-title-bg">
     <!-- 圖片請替換 src，推薦寬高比 5:1~6:1，建議 1100x215px  -->
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1100&q=80" alt="馬德里旅遊主題圖" class="main-title-bgimg">
+    <img src="madrid.png" alt="馬德里旅遊主題圖" class="main-title-bgimg">
     <div class="main-title-area">
-        <div class="main-title">馬德里四天三夜行程規劃</div>
+        <div class="main-title">馬德里不思議</div>
     </div>
 </div>
-<div class="morandi-sub">西班牙莫蘭迪色主題・自然旅行風格・互動行程地圖</div>
+<div class="morandi-sub"></div>
 <div class="nav-controls">
     <div class="navbar-links">
         <button class="navbar-link active" onclick="showDay(0);showTab(getCurrentTab());">8/27</button>
@@ -289,7 +289,7 @@
         <button class="navbar-link" onclick="showDay(4);showTab(getCurrentTab());">美食伴手禮</button>
     </div>
     <div class="tab-bar">
-        <button class="tab-btn active" onclick="showTab('text')">行程文字</button>
+        <button class="tab-btn active" onclick="showTab('text')">行程</button>
         <button class="tab-btn" onclick="showTab('map')">地圖模式</button>
     </div>
 </div>
